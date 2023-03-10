@@ -1,0 +1,87 @@
+import React , { Component } from 'react';
+import { Link } from 'react-router-dom';
+import '../css/EmployeeDash.css';
+
+
+class EmployeeDash extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      prevScrollPos: window.pageYOffset,
+      visible: true
+    };
+  };
+
+  // Adds an event listener when the component is mount.
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  };
+
+  // Remove the event listener when the component is unmount.
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  };
+
+  // Hide or show the menu.
+  handleScroll = () => {
+    const { prevScrollPos } = this.state;
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollPos > currentScrollPos;
+
+    this.setState({
+      prevScrollPos: currentScrollPos,
+      visible
+    });
+  };
+
+  render() {
+    const { visible } = this.state;
+    return (
+  <nav style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}} className={`navbar navbar-expand-lg navbar-dark ${visible ? 'navbar--visible' : 'navbar--hidden'}`}>
+        <div className="container">
+          <a className="navbar-brand text-black" href="/">
+            <b>Employee Dashboard</b>
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon text-black"></span>
+          </button>
+
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <div className="mx-auto"></div>
+            <ul className="navbar-nav">
+            
+              <li className="nav-item">
+                <a className="nav-link text-black" href="/etasklist">
+               <b>Task List</b>
+                </a>
+              </li>
+              &nbsp; &nbsp;
+              <li className="nav-item">
+                <a className="nav-link text-black" href="/eemplist">
+                <b> Teammates List</b>
+                </a>
+              </li>
+              &nbsp; &nbsp;
+              <li className="nav-item">
+                <a className="nav-link text-black" href="/eprojectlist">
+                <b> Project List</b>
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+    );
+  }
+};
+
+export default EmployeeDash;
